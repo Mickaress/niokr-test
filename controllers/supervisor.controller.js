@@ -50,7 +50,7 @@ class SupervisorController {
       };
     });
 
-    res.json({ projects: projects, projectsCount: projectsCount });
+    res.json({ projects: projects, projectsCount: projectsCount.length });
     try {
     } catch (error) {
       console.log(error);
