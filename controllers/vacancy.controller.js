@@ -101,7 +101,9 @@ class VacancyController {
 
         return {
           ...vacancy,
-          period: `${vacancy.dateStart.toLocaleDateString()} - ${vacancy.dateEnd.toLocaleDateString()}`,
+          period: `${vacancy.dateStart.toLocaleDateString(
+            'ru-RU',
+          )} - ${vacancy.dateEnd.toLocaleDateString('ru-RU')}`,
           skills: skills,
         };
       });
@@ -147,10 +149,14 @@ class VacancyController {
         ...vacancy,
         project: {
           ...vacancy.project,
-          period: `${vacancy.project.dateStart.toLocaleDateString()} - ${vacancy.project.dateEnd.toLocaleDateString()}`,
+          period: `${vacancy.project.dateStart.toLocaleDateString(
+            'ru-RU',
+          )} - ${vacancy.project.dateEnd.toLocaleDateString('ru-RU')}`,
           skills: projectSkills,
         },
-        period: `${vacancy.dateStart.toLocaleDateString()} - ${vacancy.dateEnd.toLocaleDateString()}`,
+        period: `${vacancy.dateStart.toLocaleDateString(
+          'ru-RU',
+        )} - ${vacancy.dateEnd.toLocaleDateString('ru-RU')}`,
         skills: skills,
       };
 

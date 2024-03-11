@@ -21,7 +21,7 @@ class UserController {
         userInfo = {
           ...userInfo,
           skills: skills,
-          birthday: userInfo.birthday?.toLocaleDateString(),
+          birthday: userInfo.birthday?.toLocaleDateString('ru-RU'),
         };
         res.json(userInfo);
         return;

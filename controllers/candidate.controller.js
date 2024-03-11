@@ -41,7 +41,7 @@ class CandidateController {
         responses = responses.map((response) => {
           return {
             ...response,
-            date: response.date.toLocaleDateString(),
+            date: response.date.toLocaleDateString('ru-RU'),
           };
         });
         res.json(responses);

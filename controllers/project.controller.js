@@ -89,7 +89,9 @@ class ProjectController {
 
         return {
           ...project,
-          period: `${project.dateStart.toLocaleDateString()} - ${project.dateEnd.toLocaleDateString()}`,
+          period: `${project.dateStart.toLocaleDateString(
+            'ru-RU',
+          )} - ${project.dateEnd.toLocaleDateString('ru-RU')}`,
           skills: skills,
         };
       });
@@ -123,9 +125,13 @@ class ProjectController {
         return skill.skill;
       });
 
+      console.log(project.dateStart);
+
       project = {
         ...project,
-        period: `${project.dateStart.toLocaleDateString()} - ${project.dateEnd.toLocaleDateString()}`,
+        period: `${project.dateStart.toLocaleDateString(
+          'ru-RU',
+        )} - ${project.dateEnd.toLocaleDateString('ru-RU')}`,
         skills: skills,
       };
 

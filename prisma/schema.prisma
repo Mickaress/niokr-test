@@ -50,7 +50,7 @@ model Vacancy {
   dateStart        DateTime
   dateEnd          DateTime
   salary           Int
-  stateId          Int            @default(1)
+  stateId          Int            @default(3)
   state            State          @relation(fields: [stateId], references: [id])
   projectId        Int
   project          Project        @relation(fields: [projectId], references: [id])
@@ -61,7 +61,7 @@ model Vacancy {
 model Response {
   id          Int      @id @default(autoincrement())
   date        DateTime @default(now())
-  stateId     Int      @default(1)
+  stateId     Int      @default(3)
   state       State    @relation(fields: [stateId], references: [id])
   candidateId Int
   candidate   User     @relation(fields: [candidateId], references: [id])
@@ -74,7 +74,7 @@ model Response {
 model Skill {
   id              Int              @id @default(autoincrement())
   name            String
-  stateId         Int              @default(1)
+  stateId         Int              @default(3)
   state           State            @relation(fields: [stateId], references: [id])
   candidateSkills CandidateSkill[]
   projects        ProjectSkill[]
