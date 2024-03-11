@@ -1,0 +1,125 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int              @id @default(autoincrement())
+  fio          String
+  role         String
+  email        String? // Соискатели и руководители
+  phone        String? // Соискатели и руководители
+  institute    String? // Соискатели
+  competencies String? // Соискатели
+  mailing      Boolean? // Соискатели
+  group        String? // Студенты
+  birthday     DateTime? // Студенты
+  post         String? // Сотрудники
+  projects     Project[] // Руководители
+  responses    Response[] // Соискатели
+  skills       CandidateSkill[] // Соискатели
+}
+
+model Project {
+  id           Int            @id @default(autoincrement())
+  title        String
+  conditions   String
+  description  String
+  goal         String
+  dateStart    DateTime
+  dateEnd      DateTime
+  payment      Boolean
+  stateId      Int            @default(1)
+  state        State          @relation(fields: [stateId], references: [id])
+  supervisorId Int
+  supervisor   User           @relation(fields: [supervisorId], references: [id])
+  skills       ProjectSkill[]
+  vacancies    Vacancy[]
+}
+
+model Vacancy {
+  id               Int            @id @default(autoincrement())
+  title            String
+  conditions       String
+  responsibilities String
+  requirements     String
+  dateStart        DateTime
+  dateEnd          DateTime
+  salary           Int
+  stateId          Int            @default(1)
+  state            State          @relation(fields: [stateId], references: [id])
+  projectId        Int
+  project          Project        @relation(fields: [projectId], references: [id])
+  responses        Response[]
+  skills           VacancySkill[]
+}
+
+model Response {
+  id          Int      @id @default(autoincrement())
+  date        DateTime @default(now())
+  stateId     Int      @default(1)
+  state       State    @relation(fields: [stateId], references: [id])
+  candidateId Int
+  candidate   User     @relation(fields: [candidateId], references: [id])
+  vacancyId   Int
+  vacancy     Vacancy  @relation(fields: [vacancyId], references: [id])
+
+  @@unique([candidateId, vacancyId])
+}
+
+model Skill {
+  id              Int              @id @default(autoincrement())
+  name            String
+  stateId         Int              @default(1)
+  state           State            @relation(fields: [stateId], references: [id])
+  candidateSkills CandidateSkill[]
+  projects        ProjectSkill[]
+  vacancies       VacancySkill[]
+}
+
+model State {
+  id       Int        @id @default(autoincrement())
+  state    String
+  // Skill    Skill[]
+  // Response Response[]
+  // Vacancy  Vacancy[]
+  // Project  Project[]
+  Vacancy  Vacancy[]
+  Response Response[]
+  Skill    Skill[]
+  Project  Project[]
+}
+
+model CandidateSkill {
+  id          Int   @id @default(autoincrement())
+  candidateId Int
+  candidate   User  @relation(fields: [candidateId], references: [id])
+  skillId     Int
+  skill       Skill @relation(fields: [skillId], references: [id])
+
+  @@unique([candidateId, skillId])
+}
+
+model ProjectSkill {
+  id        Int     @id @default(autoincrement())
+  projectId Int
+  project   Project @relation(fields: [projectId], references: [id])
+  skillId   Int
+  skill     Skill   @relation(fields: [skillId], references: [id])
+
+  @@unique([projectId, skillId])
+}
+
+model VacancySkill {
+  id        Int     @id @default(autoincrement())
+  vacancyId Int
+  vacancy   Vacancy @relation(fields: [vacancyId], references: [id])
+  skillId   Int
+  skill     Skill   @relation(fields: [skillId], references: [id])
+
+  @@unique([vacancyId, skillId])
+}
