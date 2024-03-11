@@ -69,6 +69,7 @@ class ProjectController {
               skill: true,
             },
           },
+          state: true,
         },
         skip: (page - 1) * perPage,
         take: perPage,
@@ -118,6 +119,7 @@ class ProjectController {
               skill: true,
             },
           },
+          state: true,
         },
       });
 

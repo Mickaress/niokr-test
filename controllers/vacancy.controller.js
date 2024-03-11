@@ -81,6 +81,7 @@ class VacancyController {
               skill: true,
             },
           },
+          state: true,
         },
         skip: (page - 1) * perPage,
         take: perPage,
@@ -138,6 +139,7 @@ class VacancyController {
               },
             },
           },
+          state: true,
         },
       });
 
