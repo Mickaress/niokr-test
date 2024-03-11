@@ -127,8 +127,6 @@ class ProjectController {
         return skill.skill;
       });
 
-      console.log(project.dateStart);
-
       project = {
         ...project,
         period: `${project.dateStart.toLocaleDateString(

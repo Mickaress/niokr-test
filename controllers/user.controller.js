@@ -12,11 +12,15 @@ class UserController {
             id: id,
           },
           include: {
-            skills: true,
+            skills: {
+              include: {
+                skill: true,
+              },
+            },
           },
         });
         const skills = userInfo.skills.map((skill) => {
-          return skill.skillId;
+          return skill.skill;
         });
         userInfo = {
           ...userInfo,

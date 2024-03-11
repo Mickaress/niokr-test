@@ -54,19 +54,44 @@ class CandidateController {
   }
   async updateSkills(req, res) {
     try {
-      const skills = req.body.skills;
-      // await prisma.candidateSkill.deleteMany({
-      // 	where: {
-      // 		candidateId:
-      // 	}
-      // })
+      const { skillIds } = req.body;
+      const candidateId = parseInt(req.headers['token']);
+
+      await prisma.candidateSkill.deleteMany({
+        where: {
+          candidateId: candidateId,
+        },
+      });
+      const data = skillIds.map((skillId) => {
+        return {
+          candidateId: candidateId,
+          skillId: skillId,
+        };
+      });
+
+      await prisma.candidateSkill.createMany({
+        data: data,
+      });
+      res.json();
     } catch (error) {
       console.log(error);
     }
   }
 
-  async setCompetencies(req, res) {
+  async updateCompetencies(req, res) {
     try {
+      const { competencies } = req.body;
+      const candidateId = parseInt(req.headers['token']);
+
+      await prisma.user.update({
+        where: {
+          id: candidateId,
+        },
+        data: {
+          competencies: competencies,
+        },
+      });
+      res.json();
     } catch (error) {
       console.log(error);
     }

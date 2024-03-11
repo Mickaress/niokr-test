@@ -11,13 +11,6 @@ class SkillController {
       console.log(error);
     }
   }
-
-  async addSkill(req, res) {
-    try {
-    } catch (error) {
-      console.log(error);
-    }
-  }
 }
 
 module.exports = new SkillController();
