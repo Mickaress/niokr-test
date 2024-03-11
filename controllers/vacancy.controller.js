@@ -137,6 +137,7 @@ class VacancyController {
                   skill: true,
                 },
               },
+              state: true,
             },
           },
           state: true,
