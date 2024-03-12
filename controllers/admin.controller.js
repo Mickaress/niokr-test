@@ -9,6 +9,15 @@ class AdminController {
         where: {
           stateId: 1,
         },
+        include: {
+          supervisor: true,
+          skills: {
+            include: {
+              skill: true,
+            },
+          },
+          state: true,
+        },
       });
       res.json(projects);
     } catch (error) {
