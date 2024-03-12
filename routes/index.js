@@ -5,6 +5,7 @@ const vacancyRouter = require('./vacancy.router');
 const skillRouter = require('./skill.router');
 const userRouter = require('./user.router');
 const candidateRouter = require('./candidate.router');
+const adminRouter = require('./admin.router');
 
 const router = new Router();
 
@@ -14,5 +15,6 @@ router.use('/vacancies', vacancyRouter);
 router.use('/skills', skillRouter);
 router.use('/user', userRouter);
 router.use('/candidate', candidateRouter);
+router.use('/admin', adminRouter);
 
 module.exports = router;

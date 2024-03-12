@@ -144,6 +144,17 @@ class VacancyController {
         },
       });
 
+      await prisma.project.update({
+        where: {
+          id: vacancy.project.id,
+        },
+        data: {
+          views: {
+            increment: 1,
+          },
+        },
+      });
+
       const skills = vacancy.skills.map((skill) => skill.skill);
 
       const projectSkills = vacancy.project.skills.map((skill) => skill.skill);

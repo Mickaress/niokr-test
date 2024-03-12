@@ -33,6 +33,7 @@ model Project {
   dateStart    DateTime
   dateEnd      DateTime
   payment      Boolean
+  views        Int            @default(0)
   stateId      Int            @default(1)
   state        State          @relation(fields: [stateId], references: [id])
   supervisorId Int

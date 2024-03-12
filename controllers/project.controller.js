@@ -123,6 +123,17 @@ class ProjectController {
         },
       });
 
+      await prisma.project.update({
+        where: {
+          id: id,
+        },
+        data: {
+          views: {
+            increment: 1,
+          },
+        },
+      });
+
       const skills = project.skills.map((skill) => {
         return skill.skill;
       });
