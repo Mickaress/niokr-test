@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 class AdminController {
   async getProjectsInterest(req, res) {
     try {
-      const projects = await prisma.project.findMany({
+      let projects = await prisma.project.findMany({
         where: {
           stateId: 1,
         },
@@ -18,6 +18,19 @@ class AdminController {
           },
           state: true,
         },
+      });
+      projects = projects.map((project) => {
+        const skills = project.skills.map((skill) => {
+          return skill.skill;
+        });
+
+        return {
+          ...project,
+          period: `${project.dateStart.toLocaleDateString(
+            'ru-RU',
+          )} - ${project.dateEnd.toLocaleDateString('ru-RU')}`,
+          skills: skills,
+        };
       });
       res.json(projects);
     } catch (error) {
