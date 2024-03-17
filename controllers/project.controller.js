@@ -113,11 +113,7 @@ class ProjectController {
         },
         include: {
           supervisor: true,
-          vacancies: {
-            select: {
-              project: true,
-            },
-          },
+          vacancies: true,
           skills: {
             select: {
               skill: true,
@@ -129,7 +125,7 @@ class ProjectController {
 
       await prisma.project.update({
         where: {
-          id: id,
+          id: parseInt(id),
         },
         data: {
           views: {
