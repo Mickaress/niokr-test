@@ -28,7 +28,7 @@ class SupervisorController {
       skip: (page - 1) * 3,
       take: 3,
       orderBy: {
-        id: 'asc',
+        stateId: 'asc',
       },
     });
 
