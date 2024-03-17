@@ -46,6 +46,9 @@ class SupervisorController {
 
       return {
         ...project,
+        period: `${project.dateStart.toLocaleDateString(
+          'ru-RU',
+        )} - ${project.dateEnd.toLocaleDateString('ru-RU')}`,
         skills: skills,
       };
     });
