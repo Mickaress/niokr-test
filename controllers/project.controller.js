@@ -113,7 +113,11 @@ class ProjectController {
         },
         include: {
           supervisor: true,
-          vacancies: true,
+          vacancies: {
+            select: {
+              project: true,
+            },
+          },
           skills: {
             select: {
               skill: true,
