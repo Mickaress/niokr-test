@@ -97,7 +97,7 @@ class ProjectController {
         };
       });
 
-      res.json({ projectCount: projectsCount.length, projects: projects });
+      res.json({ projectsCount: projectsCount.length, projects: projects });
     } catch (error) {
       console.log(error);
     }
