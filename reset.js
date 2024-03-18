@@ -21,7 +21,7 @@ app.get('/', async (req, res) => {
         competencies: 'Умение работать в команде.',
         mailing: true,
         group: 'АСУб-20-1',
-        birthday: '12.12.2002',
+        birthday: new Date('12.12.2002'),
       },
       {
         fio: 'Смирнов Игорь Олегович',
