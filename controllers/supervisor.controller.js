@@ -13,11 +13,7 @@ class SupervisorController {
         supervisorId: supervisorId,
       },
       include: {
-        supervisor: {
-          select: {
-            fio: true,
-          },
-        },
+        supervisor: true,
         skills: {
           select: {
             skill: true,
