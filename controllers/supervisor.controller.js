@@ -103,6 +103,7 @@ class SupervisorController {
     const query = req.query;
     const projectId = parseInt(query.projectId);
     const page = parseInt(query.page) || 1;
+    const perPage = parseInt(query.perPage) || 3;
 
     let vacancies = await prisma.vacancy.findMany({
       where: {
