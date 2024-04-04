@@ -105,52 +105,55 @@ class SupervisorController {
     const page = parseInt(query.page) || 1;
     const perPage = parseInt(query.perPage) || 3;
 
-    let vacancies = await prisma.vacancy.findMany({
-      where: {
-        projectId: projectId,
-      },
-      include: {
-        project: {
-          include: {
-            supervisor: true,
-          },
+    if (projectId) {
+      let vacancies = await prisma.vacancy.findMany({
+        where: {
+          projectId: projectId,
         },
-        skills: {
-          select: {
-            skill: true,
+        include: {
+          project: {
+            include: {
+              supervisor: true,
+            },
           },
+          skills: {
+            select: {
+              skill: true,
+            },
+          },
+          state: true,
         },
-        state: true,
-      },
-      skip: (page - 1) * perPage,
-      take: perPage,
-      orderBy: {
-        id: 'asc',
-      },
-    });
-
-    const vacanciesCount = await prisma.vacancy.findMany({
-      where: {
-        projectId: projectId,
-      },
-    });
-
-    // Форматирование
-    vacancies = vacancies.map((vacancy) => {
-      const skills = vacancy.skills.map((skill) => {
-        return skill.skill;
+        skip: (page - 1) * perPage,
+        take: perPage,
+        orderBy: {
+          id: 'asc',
+        },
       });
 
-      return {
-        ...vacancy,
-        period: `${vacancy.dateStart.toLocaleDateString(
-          'ru-RU',
-        )} - ${vacancy.dateEnd.toLocaleDateString('ru-RU')}`,
-        skills: skills,
-      };
-    });
+      const vacanciesCount = await prisma.vacancy.findMany({
+        where: {
+          projectId: projectId,
+        },
+      });
 
-    res.json({ vacancyCount: vacanciesCount.length, vacancies: vacancies });
+      // Форматирование
+      vacancies = vacancies.map((vacancy) => {
+        const skills = vacancy.skills.map((skill) => {
+          return skill.skill;
+        });
+
+        return {
+          ...vacancy,
+          period: `${vacancy.dateStart.toLocaleDateString(
+            'ru-RU',
+          )} - ${vacancy.dateEnd.toLocaleDateString('ru-RU')}`,
+          skills: skills,
+        };
+      });
+
+      res.json({ vacancyCount: vacanciesCount.length, vacancies: vacancies });
+    }
+    res.json({ vacancyCount: 0, vacancies: [] });
     try {
     } catch (error) {
       console.log(error);
