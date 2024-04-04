@@ -55,6 +55,65 @@ class SupervisorController {
       console.log(error);
     }
   }
+
+  async createVacancies(req, res) {
+    const {
+      title,
+      conditions,
+      responsibilities,
+      requirements,
+      dateStart,
+      dateEnd,
+      salary,
+      skillIds,
+      projectId,
+    } = req.body;
+
+    const vacancy = await prisma.vacancy.create({
+      data: {
+        title: title,
+        conditions: conditions,
+        responsibilities: responsibilities,
+        requirements: requirements,
+        dateStart: dateStart,
+        dateEnd: dateEnd,
+        salary: salary,
+        projectId: projectId,
+      },
+    });
+
+    const data = skillIds.map((skillId) => {
+      return {
+        vacancyId: vacancy.id,
+        skillId: skillId,
+      };
+    });
+    await prisma.vacancySkill.createMany({
+      data: data,
+    });
+
+    res.json({ projects: projects, projectsCount: projectsCount.length });
+    try {
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async getProjectVacancies(req, res) {
+    const { id: projectId } = req.params;
+
+    const vacancies = await prisma.findMany({
+      where: {
+        projectId: projectId,
+      },
+    });
+
+    res.json(vacancies);
+    try {
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 
 module.exports = new SupervisorController();
