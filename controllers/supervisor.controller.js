@@ -56,6 +56,26 @@ class SupervisorController {
     }
   }
 
+  async getActiveProjects(req, res) {
+    const supervisorId = parseInt(req.headers['token']);
+
+    let projects = await prisma.project.findMany({
+      where: {
+        supervisorId: supervisorId,
+        stateId: 1,
+      },
+      orderBy: {
+        title: 'asc',
+      },
+    });
+
+    res.json(projects);
+    try {
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async createVacancies(req, res) {
     const {
       title,
@@ -104,6 +124,7 @@ class SupervisorController {
     const projectId = parseInt(query.projectId);
     const page = parseInt(query.page) || 1;
     const perPage = parseInt(query.perPage) || 3;
+
     let vacancies = await prisma.vacancy.findMany({
       where: {
         projectId: projectId,

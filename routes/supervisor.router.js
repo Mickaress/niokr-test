@@ -6,5 +6,6 @@ const router = new Router();
 router.get('/projects', supervisorController.getProjects);
 router.post('/vacancy/create', supervisorController.createVacancies);
 router.get('/project/vacancies', supervisorController.getProjectVacancies);
+router.get('/active/projects', supervisorController.getActiveProjects);
 
 module.exports = router;
