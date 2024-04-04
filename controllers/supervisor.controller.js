@@ -100,15 +100,56 @@ class SupervisorController {
   }
 
   async getProjectVacancies(req, res) {
-    const { id: projectId } = req.params;
+    const query = req.query;
+    const projectId = parseInt(query.projectId);
+    const page = parseInt(query.page) || 1;
 
-    const vacancies = await prisma.findMany({
+    let vacancies = await prisma.vacancy.findMany({
+      where: {
+        projectId: projectId,
+      },
+      include: {
+        project: {
+          include: {
+            supervisor: true,
+          },
+        },
+        skills: {
+          select: {
+            skill: true,
+          },
+        },
+        state: true,
+      },
+      skip: (page - 1) * perPage,
+      take: perPage,
+      orderBy: {
+        id: 'asc',
+      },
+    });
+
+    const vacanciesCount = await prisma.vacancy.findMany({
       where: {
         projectId: projectId,
       },
     });
 
-    res.json(vacancies);
+    // Форматирование
+    vacancies = vacancies.map((vacancy) => {
+      const skills = vacancy.skills.map((skill) => {
+        return skill.skill;
+      });
+
+      return {
+        ...vacancy,
+        period: `${vacancy.dateStart.toLocaleDateString(
+          'ru-RU',
+        )} - ${vacancy.dateEnd.toLocaleDateString('ru-RU')}`,
+        skills: skills,
+      };
+    });
+
+    res.json({ vacancyCount: vacanciesCount.length, vacancies: vacancies });
     try {
     } catch (error) {
       console.log(error);
