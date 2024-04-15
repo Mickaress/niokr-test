@@ -176,6 +176,50 @@ class SupervisorController {
       console.log(error);
     }
   }
+
+  async getVacancyResponses(req, res) {
+    const { vacancyId } = req.params;
+    const query = req.query;
+    const stateId = query.stateId || 3;
+    const page = query.page || 1;
+    const perPage = query.perPage || 10;
+
+    const responses = await prisma.response.findMany({
+      where: {
+        vacancyId: parseInt(vacancyId),
+        stateId: parseInt(stateId),
+      },
+      include: {
+        candidate: {
+          include: {
+            skills: {
+              include: {
+                skill: true,
+              },
+            },
+          },
+        },
+      },
+      skip: (page - 1) * perPage,
+      take: perPage,
+      orderBy: {
+        id: 'asc',
+      },
+    });
+
+    const responsesCount = await prisma.response.findMany({
+      where: {
+        vacancyId: parseInt(vacancyId),
+        stateId: parseInt(stateId),
+      },
+    });
+
+    res.json({ responses: responses, count: responsesCount });
+    try {
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 
 module.exports = new SupervisorController();
