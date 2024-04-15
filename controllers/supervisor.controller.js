@@ -207,14 +207,14 @@ class SupervisorController {
       },
     });
 
-    const responsesCount = await prisma.response.findMany({
+    const responsesCount = await prisma.response.count({
       where: {
         vacancyId: parseInt(vacancyId),
         stateId: parseInt(stateId),
       },
     });
 
-    res.json({ responses: responses, count: responsesCount });
+    res.json({ responses: responses, count: responsesCount.length });
     try {
     } catch (error) {
       console.log(error);
