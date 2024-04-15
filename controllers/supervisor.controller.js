@@ -214,9 +214,7 @@ class SupervisorController {
       },
     });
 
-    console.log(responsesCount);
-
-    res.json({ responses: responses, count: responsesCount.length });
+    res.json({ responses: responses, count: responsesCount });
     try {
     } catch (error) {
       console.log(error);
