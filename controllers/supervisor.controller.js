@@ -37,7 +37,7 @@ class SupervisorController {
     // Форматирование
     projects = projects.map((project) => {
       const skills = project.skills.map((skill) => {
-        return skill.skill;
+        return skill.id;
       });
 
       return {
@@ -158,7 +158,7 @@ class SupervisorController {
     // Форматирование
     vacancies = vacancies.map((vacancy) => {
       const skills = vacancy.skills.map((skill) => {
-        return skill.skill;
+        return skill.id;
       });
 
       return {

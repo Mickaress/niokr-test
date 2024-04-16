@@ -85,7 +85,7 @@ class ProjectController {
       // Форматирование
       projects = projects.map((project) => {
         const skills = project.skills.map((skill) => {
-          return skill.skill;
+          return skill.id;
         });
 
         return {
@@ -135,7 +135,7 @@ class ProjectController {
       });
 
       const skills = project.skills.map((skill) => {
-        return skill.skill;
+        return skill.id;
       });
 
       project = {

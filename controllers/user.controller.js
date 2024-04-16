@@ -20,7 +20,7 @@ class UserController {
           },
         });
         const skills = userInfo.skills.map((skill) => {
-          return skill.skill;
+          return skill.id;
         });
         userInfo = {
           ...userInfo,

@@ -97,7 +97,7 @@ class VacancyController {
       // Форматирование
       vacancies = vacancies.map((vacancy) => {
         const skills = vacancy.skills.map((skill) => {
-          return skill.skill;
+          return skill.id;
         });
 
         return {
@@ -155,7 +155,7 @@ class VacancyController {
         },
       });
 
-      const skills = vacancy.skills.map((skill) => skill.skill);
+      const skills = vacancy.skills.map((skill) => skill.id);
 
       const projectSkills = vacancy.project.skills.map((skill) => skill.skill);
 

@@ -21,7 +21,7 @@ class AdminController {
       });
       projects = projects.map((project) => {
         const skills = project.skills.map((skill) => {
-          return skill.skill;
+          return skill.id;
         });
 
         return {
