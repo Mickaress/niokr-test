@@ -184,7 +184,7 @@ class SupervisorController {
     const page = query.page || 1;
     const perPage = query.perPage || 10;
 
-    const responses = await prisma.response.findMany({
+    let responses = await prisma.response.findMany({
       where: {
         vacancyId: parseInt(vacancyId),
         stateId: parseInt(stateId),
@@ -199,12 +199,27 @@ class SupervisorController {
             },
           },
         },
+        state: true,
       },
       skip: (page - 1) * perPage,
       take: perPage,
       orderBy: {
         id: 'asc',
       },
+    });
+
+    responses = responses.map((response) => {
+      const skills = response.candidate.skills.map((skill) => {
+        return skill.id;
+      });
+
+      return {
+        ...response,
+        candidate: {
+          ...response.candidate,
+          skills: skills,
+        },
+      };
     });
 
     const responsesCount = await prisma.response.count({
