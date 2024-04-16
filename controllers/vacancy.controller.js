@@ -90,6 +90,8 @@ class VacancyController {
         },
       });
 
+      console.log(vacancies);
+
       const vacanciesCount = await prisma.vacancy.findMany({
         where: filter,
       });
