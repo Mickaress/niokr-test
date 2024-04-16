@@ -76,11 +76,7 @@ class VacancyController {
               supervisor: true,
             },
           },
-          skills: {
-            select: {
-              skill: true,
-            },
-          },
+          skills: true,
           state: true,
         },
         skip: (page - 1) * perPage,
